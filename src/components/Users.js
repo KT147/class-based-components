@@ -2,6 +2,7 @@ import { Component } from "react";
 import User from "./User";
 
 import classes from "./Users.module.css";
+import UsersContext from "../store/users-context";
 
 // const DUMMY_USERS = [
 //   { id: "u1", name: "Max" },
@@ -10,11 +11,18 @@ import classes from "./Users.module.css";
 // ];
 
 class Users extends Component {
+  static contextType = UsersContext
   constructor() {
     super()
     this.state = {
       showUsers: true,
     };
+  }
+
+  componentDidUpdate(){
+    if(this.props.users.length === 0) {
+      throw new Error("No users provided!")
+    }
   }
 
   toggleUsersHandler() {
